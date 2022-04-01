@@ -1,28 +1,31 @@
+// @ts-check
+
+// добавил типы
+/**
+ * @param {string | number | Date} timestamp
+ * @returns {{ dayPeriod: 'pm' | 'am'; isSameDate: boolean }}
+ */
 function checkDate(timestamp) {
-    var day = new Date(timestamp * 1000).getDate();
-    var month = new Date(timestamp * 1000).getMonth();
-    var year = new Date(timestamp * 1000).getFullYear();
-    var hour = new Date(timestamp * 1000).getHours();
+  // var устарел, а let не нужен т.к. переменные всё равно не переопределяем
+  // new Date(timestamp * 1000).getDate() - ... * 1000 ломает код т.к. и так нормальная дата умножается на 1000
+  const day = new Date(timestamp).getDate();
+  const month = new Date(timestamp).getMonth();
+  const year = new Date(timestamp).getFullYear();
+  const hour = new Date(timestamp).getHours();
 
-    const current_Date = new Date(Date.now());
-    const current_day = current_Date.getDate();
-    const current_month = current_Date.getMonth() + 1;
-    const currentYear = current_Date.getFullYear();
+  // поправил имена переменных с рандомного на camelCase
+  const currentDate = new Date(Date.now());
+  const currentDay = currentDate.getDate();
+  // current_Date.getMonth() + 1 - лишний код
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
 
-    let isSameDate = false;
+  // вместо кучи вложенных условий можно сразу присвоить переменной логическое выражение
+  const isSameDate =
+    year === currentYear && month === currentMonth && day === currentDay;
 
-    if (year == currentYear) {
-        if (month == current_month) {
-            if (day == current_day) {
-                isSameDate = true;
-            } else {
-                isSameDate = false;
-            }
-        }
-    }
-
-    return {
-        isSameDate: isSameDate,
-        dayPeriod: hour > 11 ? 'pm' : 'am'
-    }
+  return {
+    dayPeriod: hour > 11 ? 'pm' : 'am',
+    isSameDate,
+  };
 }
