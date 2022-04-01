@@ -1,0 +1,12 @@
+.timer-display {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.timer {
+  margin-bottom: 0.5rem;
+}
